@@ -1,7 +1,6 @@
 import style from './style.module.css';
-console.log(style);
 
-const Layout = ({ title, descr, urlBg, colorBg = 'yellow' }) => {
+const Layout = ({ title, descr, urlBg, colorBg = 'yellow', children }) => {
     const styleRoot = urlBg ? { background: `url(${urlBg})` } : { background: `${colorBg}`};
     return (
         <section className={ style.root } style={ styleRoot }>
@@ -15,6 +14,9 @@ const Layout = ({ title, descr, urlBg, colorBg = 'yellow' }) => {
                         <p>{ descr }</p>
                     </div>
                 </article>
+                <div className={style.children}>
+                    {children}
+                </div>
             </div>
         </section>
     )
