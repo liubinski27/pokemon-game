@@ -8,8 +8,8 @@ const HeaderMenu = () => {
 const[isOpen, setOpen] = useState(true);
 
 const handleOpenMenu = () => {
-    console.log('####: <Main />');
-    setOpen(true);
+    console.log('####: <HeaderMenu />');
+    setOpen(prev => !prev);
 }
   
   return (

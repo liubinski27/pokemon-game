@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import style from './style.module.css';
 
 const Menu = ({isOpen}) => {
+    console.log(isOpen)
     return (
         <div className={classNames(style.menuContainer, isOpen ? style.active : style.deactive)}>
             <div className={style.overlay} />
