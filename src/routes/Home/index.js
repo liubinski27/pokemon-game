@@ -1,39 +1,24 @@
-import HeaderMenu from '../../components/HeaderMenu';
 import Header from '../../components/Header';
 import Layout from '../../components/Layout';
-import Footer from '../../components/Footer';
 import PokemonCard from '../../components/PokemonCard';
-
-import background1 from '../../img/bg1.jpg';
-import background2 from '../../img/bg2.jpg';
 
 import POKEMONS from '../../pokemons';
 
 import style from './style.module.css';
 
-const pokemons = POKEMONS;
-console.log(pokemons); 
-
-const HomePage = ({ onChangePage }) => {
-  const handleClickButton = (page) => {
-    console.log('####: <HomePage />');
-    onChangePage && onChangePage(page);
-  }
+const HomePage = () => {
   return (
     <div className={style.App}>
-
-      <HeaderMenu/>
 
       <Header
         title="It is a Header!"
         descr="description"
-        onClickButton={handleClickButton}
       />
 
       <Layout
         title="Rules"
         descr="Rules is here!"
-        urlBg={background1}
+        colorBg="#4fc9ea"
       >
         <p>In the game two players face off against one another, one side playing as "blue", the other as "red" on a 3x3 grid.</p>
         <p>Each player has five cards in a hand and the aim is to capture the opponent's cards by turning them into the player's own color of red or blue.</p><br />
@@ -45,7 +30,7 @@ const HomePage = ({ onChangePage }) => {
         descr="to learn React!"
         colorBg="#4fc9ea"
       >
-        <div className="flex">
+        <div className={style.flex}>
           {
             POKEMONS.map(item => <PokemonCard key={item.id} id={item.id} name={item.name} img={item.img} type={item.type} values={item.values}/>)
           }
@@ -55,10 +40,8 @@ const HomePage = ({ onChangePage }) => {
       <Layout
         title="title"
         descr="text :)"
-        urlBg={background2}
+        colorBg="#4fc9ea"
       />
-
-      <Footer />
 
     </div>
   );

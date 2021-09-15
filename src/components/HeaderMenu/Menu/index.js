@@ -1,33 +1,38 @@
 import classNames from 'classnames';
+import { Link } from 'react-router-dom';
 
 import style from './style.module.css';
 
-const Menu = ({isOpen}) => {
-    console.log(isOpen)
+const Menu = ({isOpen, onClickButton}) => {
+
+    const handleClick = () => {
+        onClickButton && onClickButton();
+    }
+
     return (
         <div className={classNames(style.menuContainer, isOpen ? style.active : style.deactive)}>
             <div className={style.overlay} />
             <div className={style.menuItems}>
                 <ul>
                     <li>
-                        <a href="#welcome">
+                        <Link to="home" onClick={handleClick}>
                             HOME
-                        </a>
+                        </Link>
                     </li>
                     <li>
-                        <a href="#game">
+                        <Link to="game" onClick={handleClick}>
                             GAME
-                        </a>
+                        </Link>
                     </li>
                     <li>
-                        <a href="#about">
+                        <Link to="about" onClick={handleClick}>
                             ABOUT
-                        </a>
+                        </Link>
                     </li>
                     <li>
-                        <a href="#contact">
+                        <Link to="contact" onClick={handleClick}>
                             CONTACT
-                        </a>
+                        </Link>
                     </li>
                 </ul>
             </div>

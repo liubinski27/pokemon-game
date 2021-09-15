@@ -3,22 +3,25 @@ import { useState } from 'react';
 import Menu from './Menu'
 import NavBar from './Navbar';
 
-const HeaderMenu = () => {
+const HeaderMenu = ({ bgActive }) => {
 
-const[isOpen, setOpen] = useState(true);
+  const [isOpen, setOpen] = useState(true);
 
-const handleOpenMenu = () => {
-    console.log('####: <HeaderMenu />');
+  const handleOpenMenu = () => {
     setOpen(prev => !prev);
-}
-  
+  }
+
   return (
-      <div>
-          <Menu 
-            isOpen={isOpen}
-          />
-          <NavBar onClickButton={handleOpenMenu} />
-      </div>
+    <div>
+      <Menu
+        isOpen={isOpen}
+        onClickButton={handleOpenMenu}
+      />
+      <NavBar
+        bgActive={bgActive}
+        onClickButton={handleOpenMenu}
+      />
+    </div>
   )
 }
 

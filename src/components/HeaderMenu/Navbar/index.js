@@ -2,21 +2,22 @@ import classNames from 'classnames';
 
 import style from './style.module.css';
 
-const Navbar = ({onClickButton}) => {
+const Navbar = ({bgActive, onClickButton}) => {
 
     const handleClick = () => {
-        console.log('clicked');
         onClickButton && onClickButton();
     }
 
     return (
-        <nav className={style.root}>
+        <nav className={classNames(style.root, {
+            [style.bg]: bgActive
+        })}>
             <div className={style.navWrapper}>
                 <p className={style.brand}>
                     LOGO
                 </p>
-                <a className={classNames(style.menuButton, style.deactive)}>
-                    <span onClick={handleClick} />
+                <a className={classNames(style.menuButton, style.deactive)} onClick={handleClick}>
+                    <span />
                 </a>
             </div>
         </nav>

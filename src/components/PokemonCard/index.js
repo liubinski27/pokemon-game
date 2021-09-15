@@ -10,6 +10,7 @@ const PokemonCard = ({name, img, id, type, values}) => {
 
     const handleClick = () => {
         isActive ? setActive(false) : setActive (true);
+        console.log(id);
     }
 
     return (

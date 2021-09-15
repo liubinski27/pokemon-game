@@ -6,6 +6,10 @@
     display: flex;
     justify-content: center;
   }
+
+  .bg {
+    background: linear-gradient(45deg, rgb(0, 0, 0), rgb(103, 103, 103));
+  }
   
   .root.bgActive {
     background: #181d23;
@@ -59,11 +63,16 @@
   .menuButton span::after {
     top: 8px;
   }
+
+  .menuButton:hover {
+    cursor: pointer;
+  }
   
   .menuButton:hover > span,
   .menuButton:hover > span::before,
   .menuButton:hover > span::after {
     background: #f300b4;
+
   }
   
   .menuButton.active > span  {
