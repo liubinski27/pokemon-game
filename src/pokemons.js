@@ -24,7 +24,8 @@ module.exports = [
             "right": 2,
             "bottom": 7,
             "left": 5
-        }
+        },
+        "active": false
     },
     {
         "abilities": [
@@ -51,7 +52,8 @@ module.exports = [
             "right": 9,
             "bottom": "A",
             "left": "A"
-        }
+        },
+        "active": false
     },
     {
         "abilities": [
@@ -77,7 +79,8 @@ module.exports = [
             "right": "A",
             "bottom": 9,
             "left": 6
-        }
+        },
+        "active": false
     },
     {
         "abilities": [
@@ -103,7 +106,8 @@ module.exports = [
             "right": 4,
             "bottom": 2,
             "left": 7
-        }
+        },
+        "active": false
     },
     {
         "abilities": [
@@ -129,6 +133,7 @@ module.exports = [
             "right": 6,
             "bottom": 1,
             "left": 4
-        }
+        },
+        "active": false
     }
 ]
