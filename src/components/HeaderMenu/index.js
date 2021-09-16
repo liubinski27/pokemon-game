@@ -5,7 +5,7 @@ import NavBar from './Navbar';
 
 const HeaderMenu = ({ bgActive }) => {
 
-  const [isOpen, setOpen] = useState(true);
+  const [isOpen, setOpen] = useState(null);
 
   const handleOpenMenu = () => {
     setOpen(prev => !prev);
