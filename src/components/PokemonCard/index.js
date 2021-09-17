@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import classNames from 'classnames';
 
 import cardBackSide from './img/card-back-side.jpg';

@@ -12,6 +12,13 @@
     padding-bottom: 15px;
 }
 
+.button__flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+}
+
 .flex {
     display: flex;
     flex-direction: row;

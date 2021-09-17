@@ -1,8 +1,5 @@
 import Header from '../../components/Header';
 import Layout from '../../components/Layout';
-import PokemonCard from '../../components/PokemonCard';
-
-import POKEMONS from '../../pokemons';
 
 import style from './style.module.css';
 
