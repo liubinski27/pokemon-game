@@ -83,8 +83,9 @@
     color: #fafafa;
 }
 
-.card {
-    width: 40%;
+.pokemonCard {
+    width: 18vw;
     height: 380px;
     cursor: pointer;
+    margin-top: 40px;
 }

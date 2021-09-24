@@ -4,7 +4,7 @@ import cardBackSide from './img/card-back-side.jpg';
 
 import style from './style.module.css';
 
-const PokemonCard = ({className, name, img, id, type, values, minimize, isActive, isSelected, onClickPokemon }) => {
+const PokemonCard = ({className, name, img, id, type, values, minimize, isActive, isSelected, onClickPokemon, possession }) => {
 
     const handleClick = () => {
         onClickPokemon && onClickPokemon(id);
@@ -14,7 +14,7 @@ const PokemonCard = ({className, name, img, id, type, values, minimize, isActive
         <div className={classNames(className, style.pokemonCard, { [style.active]: isActive, [style.selected]: isSelected })} onClick={handleClick}>
             <div className={style.cardFront}>
                 <div className={classNames(style.wrap, style.front)}>
-                    <div className={classNames(style.pokemon, style[type])}>
+                    <div className={classNames(style.pokemon, style[type]), style[possession]}>
                         <div className={style.values}>
                             <div className={classNames(style.count, style.top)}>{values.top}</div>
                             <div className={classNames(style.count, style.right)}>{values.right}</div>
