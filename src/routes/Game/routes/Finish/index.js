@@ -5,29 +5,37 @@ import PokemonCard from "../../../../components/PokemonCard";
 import classNames from "classnames";
 
 import style from './style.module.css';
+import { FireBaseContext } from "../../../../context/firebaseContext";
 
 const FinishPage = (pokemons1, pokemons2) => {
     const history = useHistory();
+    const firebaseContext = useContext(FireBaseContext);
     const pokemonContext = useContext(PokemonContext);
-    console.log(pokemonContext);
 
-    if (Object.keys(pokemonContext.pokemons).length === 0 && pokemonContext.player2Pokemons.length === 0) {
+    const [player2Pokemons, setPlayer2Cards] = useState(pokemonContext.player2Pokemons);
+
+    if (Object.keys(pokemonContext.pokemons).length === 0 && Object.keys(player2Pokemons).length === 0) {
         history.replace('/game');
     }
 
     const handleBackToStart = () => {
         pokemonContext.cleanContext();
+        if (chosenPokemon && chosenPokemon != {}) {
+            firebaseContext.addPokemon(chosenPokemon);
+        }
         history.replace('/game');
-    }
-
-    const handleClick = () => {
-        console.log('asdf')
     }
 
     const [chosenPokemon, setChosenPokemon] = useState({});
 
     const handleChosePokemon = (id) => {
-        setPlayer2Pokemons(prevState)
+        if (pokemonContext.winner === 1) {
+            Object.values(player2Pokemons).map(pokemon => {
+                if (pokemon.id === id) {
+                    setChosenPokemon(pokemon);
+                }
+            })
+        }
     }
 
     return (
@@ -56,7 +64,7 @@ const FinishPage = (pokemons1, pokemons2) => {
 
             <div className={classNames(style.row, style.playerTwo)}>
                 {
-                    pokemonContext.player2Pokemons.map(([key, { name, img, id, type, values, selected }]) =>
+                    Object.entries(player2Pokemons).map(([key, { name, img, id, type, values, selected }]) =>
                         <PokemonCard
                             className={style.pokemonCard}
                             key={key}

@@ -98,8 +98,17 @@ const BoardPage = () => {
     }
 
     useEffect(() => {
-        if (steps === 2) {
-            console.log('$$$$$$ ', context)
+        if (steps === 9) {
+            const countArr = counterWin(board, player1, player2);
+            if (countArr[0] > countArr[1]) {
+                context.onSetWinner(1);
+            }
+            if (countArr[0] < countArr[1]) {
+                context.onSetWinner(2);
+            }
+            if (countArr[0] === countArr[1]) {
+                context.onSetWinner(0);
+            }
             history.replace('finish');
         }
     }, [steps]);
