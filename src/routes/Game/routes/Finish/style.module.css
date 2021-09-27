@@ -13,14 +13,14 @@
     cursor: pointer;
   }
 
-.button {
+.buttonBlock {
     height: 150px;
     display: flex;
     align-items: center;
 }
 
-button,
-button:visited {
+.button,
+.button:visited {
     width: 300px;
     max-width: 300px;
     padding: 1rem;
@@ -34,8 +34,8 @@ button:visited {
     box-sizing: border-box;
 }
 
-button,
-button:visited {
+.button,
+.button:visited {
     background: #f300b4;
     border: 1px solid transparent;
     color: #fafafa;
@@ -43,7 +43,7 @@ button:visited {
     outline: none;
 }
 
-button:hover {
+.button:hover {
     background: transparent;
     border: 1px solid #f300b4;
     color: #f300b4;
@@ -51,7 +51,7 @@ button:hover {
     outline: none;
 }
 
-button:active {
+.button:active {
     background: transparent;
     border: 1px solid #f300b4;
     color: #f300b4;
@@ -62,12 +62,12 @@ button:active {
     border-right: 2px solid;
 }
 
-button:disabled {
+.button:disabled {
     opacity: .4;
     cursor: not-allowed;
 }
 
-button:disabled:hover {
+.button:disabled:hover {
     background: #f300b4;
     border: 1px solid transparent;
     color: #fafafa;

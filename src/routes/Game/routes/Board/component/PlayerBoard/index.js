@@ -13,6 +13,7 @@ const PlayerBoard = ({ player, cards, onClickCard }) => {
             {
                 cards.map((item) => (
                     <div
+                        key={item.id}
                         className={classNames(style.cardBoard, { [style.selected]: isSelected === item.id })}
                         onClick={() => {
                             setSelected(item.id);
