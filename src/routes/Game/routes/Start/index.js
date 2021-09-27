@@ -57,7 +57,7 @@ const StartPage = () => {
                     {
                         Object.entries(pokemons).map(([key, { name, img, id, type, values, selected }]) =>
                             <PokemonCard
-                                className={style.card}
+                                className={style.pokemonCard}
                                 key={key}
                                 id={id}
                                 name={name}

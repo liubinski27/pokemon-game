@@ -1,38 +1,28 @@
-.root {
-    height: auto;
+.finish__flex {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: rgba(83, 83, 83, 0.5);
-    padding: 100px 120px;
+    padding-top: 50px;
+    padding-bottom: 150px;
 }
 
-.root h1 {
-    padding-bottom: 15px;
-}
+.pokemonCard {
+    width: 250px;
+    height: 350px;
+    cursor: pointer;
+  }
 
-.button__flex {
+.buttonBlock {
+    height: 150px;
     display: flex;
-    justify-content: center;
     align-items: center;
-    height: 100px;
-}
-
-.flex {
-    width: 1000px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    margin-bottom: 100px;
-    z-index: 0;
 }
 
 .button,
 .button:visited {
-    width: 100%;
-    max-width: 240px;
+    width: 300px;
+    max-width: 300px;
     padding: 1rem;
     border: 1px solid #fafafa;
     color: #fafafa;
@@ -83,9 +73,9 @@
     color: #fafafa;
 }
 
-.pokemonCard {
-    width: 18vw;
-    height: 380px;
-    cursor: pointer;
-    margin-top: 40px;
+.row {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }

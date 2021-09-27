@@ -39,7 +39,7 @@ class Firebase {
 
     addPokemon = (data, callback) => {
         const newKey = this.database.ref().child('pokemons').push().key;
-        this.database.ref('pokemons/' + newKey).set(data).then(() => callback());
+        this.database.ref('pokemons/' + newKey).set(data).then(() => callback && callback());
     }
 }
 
