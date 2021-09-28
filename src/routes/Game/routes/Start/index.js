@@ -7,27 +7,36 @@ import PokemonCard from '../../../../components/PokemonCard';
 import style from './style.module.css';
 import { useContext } from 'react/cjs/react.development';
 import { useHistory } from 'react-router';
-import { FireBaseContext } from '../../../../context/firebaseContext';
 import { PokemonContext } from '../../../../context/pokemonContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { getPokemonsAsync, handleSelectedPokemons, selectedPokemons, selectPokemonsData } from '../../../../store/pokemons';
 
 const StartPage = () => {
 
-    const firebase = useContext(FireBaseContext);
     const pokemonsContext = useContext(PokemonContext);
+
+    const pokemonsRedux = useSelector(selectPokemonsData);
+    const dispatch = useDispatch();
+    const selectedPokemonsRedux = useSelector(selectedPokemons);
+
     const history = useHistory();
     const [pokemons, setPokemons] = useState({});
 
-    useEffect(() => {
-        firebase.getPokemonSoket((pokemons) => {
-            setPokemons(pokemons);
-        });
 
-        return () => firebase.offPokemonSoket();
+    useEffect(() => {
+        dispatch(getPokemonsAsync());
     }, []);
 
+
+    useEffect(() => {
+        setPokemons(pokemonsRedux);
+    }, [pokemonsRedux]);
+
+
     const handleChangeSelected = (key) => {
-        const pokemon = {...pokemons[key]};
-        pokemonsContext.onSelectedPokemons(key, pokemon);
+        if (!pokemons[key]?.selected && Object.keys(selectedPokemonsRedux).length >= 5) return;
+        const pokemon = { ...pokemons[key] };
+        dispatch(handleSelectedPokemons({ key, pokemon }));
         setPokemons(prevState => ({
             ...prevState,
             [key]: {
@@ -51,7 +60,7 @@ const StartPage = () => {
                 colorBg="none"
             >
                 <div className={style.button__flex}>
-                    <button className={style.button} onClick={handleStartGameClick} disabled={Object.keys(pokemonsContext.pokemons).length < 5}>Start Game</button>
+                    <button className={style.button} onClick={handleStartGameClick} disabled={Object.keys(selectedPokemonsRedux).length < 5}>Start Game</button>
                 </div>
                 <div className={style.flex}>
                     {

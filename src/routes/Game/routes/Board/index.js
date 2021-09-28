@@ -1,8 +1,10 @@
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { useContext, useEffect, useState } from 'react/cjs/react.development';
 
 import PokemonCard from '../../../../components/PokemonCard';
 import { PokemonContext } from '../../../../context/pokemonContext';
+import { handleSetPlayer2, handleSetWinner, selectedPokemons } from '../../../../store/pokemons';
 import PlayerBoard from './component/PlayerBoard';
 import style from './style.module.css';
 
@@ -23,6 +25,9 @@ const counterWin = (board, player1, player2) => {
 }
 
 const BoardPage = () => {
+
+    const dispatch = useDispatch();
+    const selectedPokemonsRedux = useSelector(selectedPokemons);
 
     const context = useContext(PokemonContext);
 
@@ -52,14 +57,14 @@ const BoardPage = () => {
                 ...item,
                 possession: 'red',
             }));
-            context.onSetPlayer2(result);
+            dispatch(handleSetPlayer2(result));
             return result;
         });
     }, []);
 
 
 
-    if (Object.keys(pokemons).length === 0) {
+    if (Object.keys(selectedPokemonsRedux).length === 0) {
         history.replace('/game');
     }
 
@@ -101,13 +106,13 @@ const BoardPage = () => {
         if (steps === 9) {
             const countArr = counterWin(board, player1, player2);
             if (countArr[0] > countArr[1]) {
-                context.onSetWinner(1);
+                dispatch(handleSetWinner(1));
             }
             if (countArr[0] < countArr[1]) {
-                context.onSetWinner(2);
+                dispatch(handleSetWinner(2));
             }
             if (countArr[0] === countArr[1]) {
-                context.onSetWinner(0);
+                dispatch(handleSetWinner(0));
             }
             history.replace('finish');
         }

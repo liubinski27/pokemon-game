@@ -6,8 +6,11 @@ import classNames from "classnames";
 
 import style from './style.module.css';
 import { FireBaseContext } from "../../../../context/firebaseContext";
+import { useDispatch, useSelector } from "react-redux";
+import { cleanPokemons, winner } from "../../../../store/pokemons";
 
 const FinishPage = (pokemons1, pokemons2) => {
+    const dispatch = useDispatch();
     const history = useHistory();
     const firebaseContext = useContext(FireBaseContext);
     const pokemonContext = useContext(PokemonContext);
@@ -18,26 +21,26 @@ const FinishPage = (pokemons1, pokemons2) => {
         history.replace('/game');
     }
 
-    const winner = pokemonContext.winner;
+    const winnerRedux = useSelector(winner);
 
     const [isDisabled, setDisabled] = useState(true);
     const [player2Pokemons, setPlayer2Cards] = useState(poks2);
     console.log('AAAAAAAAAAAAAAAAAAAAAAAAAA, ', player2Pokemons);
     const [chosenPokemon, setChosenPokemon] = useState(null);
 
-    if (isDisabled === true && (winner === 0 || winner === 2)) {
+    if (isDisabled === true && (winnerRedux === 0 || winnerRedux === 2)) {
         setDisabled(false);
     }
 
     const handleBackToStart = () => {
-        if (winner === 0 || winner === 2) {
-            pokemonContext.cleanContext();
+        if (winnerRedux === 0 || winnerRedux === 2) {
+            dispatch(cleanPokemons());
             history.replace('/game');
         }
-        if (winner === 1) {
+        if (winnerRedux === 1) {
             if (Object.values(chosenPokemon).length > 0) {
                 console.log('12345 ', Object.values(chosenPokemon));
-                pokemonContext.cleanContext();
+                dispatch(cleanPokemons());
                 firebaseContext.addPokemon(chosenPokemon);
                 history.replace('/game');
             }
@@ -45,7 +48,7 @@ const FinishPage = (pokemons1, pokemons2) => {
     }
 
     const handleChosePokemon = (id) => {
-        if (winner === 1) {
+        if (winnerRedux === 1) {
             setPlayer2Cards(prevState => {
                 return prevState.map(pokemon => {
                     if (pokemon[1].id === id) {
