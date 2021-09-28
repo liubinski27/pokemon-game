@@ -5,15 +5,11 @@ import Layout from '../../../../components/Layout';
 import PokemonCard from '../../../../components/PokemonCard';
 
 import style from './style.module.css';
-import { useContext } from 'react/cjs/react.development';
 import { useHistory } from 'react-router';
-import { PokemonContext } from '../../../../context/pokemonContext';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPokemonsAsync, handleSelectedPokemons, selectedPokemons, selectPokemonsData } from '../../../../store/pokemons';
 
 const StartPage = () => {
-
-    const pokemonsContext = useContext(PokemonContext);
 
     const pokemonsRedux = useSelector(selectPokemonsData);
     const dispatch = useDispatch();
@@ -76,7 +72,7 @@ const StartPage = () => {
                                 isActive={true}
                                 isSelected={selected}
                                 onClickPokemon={() => {
-                                    if (Object.keys(pokemonsContext.pokemons).length < 5 || selected) {
+                                    if (Object.keys(selectedPokemonsRedux).length < 5 || selected) {
                                         handleChangeSelected(key);
                                     }
                                 }}

@@ -1,9 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-import { useContext, useEffect, useState } from 'react/cjs/react.development';
+import { useEffect, useState } from 'react/cjs/react.development';
 
 import PokemonCard from '../../../../components/PokemonCard';
-import { PokemonContext } from '../../../../context/pokemonContext';
 import { handleSetPlayer2, handleSetWinner, selectedPokemons } from '../../../../store/pokemons';
 import PlayerBoard from './component/PlayerBoard';
 import style from './style.module.css';
@@ -29,12 +28,9 @@ const BoardPage = () => {
     const dispatch = useDispatch();
     const selectedPokemonsRedux = useSelector(selectedPokemons);
 
-    const context = useContext(PokemonContext);
-
-    const { pokemons } = useContext(PokemonContext);
     const [board, setBoard] = useState([]);
     const [player1, setPlayer1] = useState(() => {
-        return Object.values(pokemons).map(item => ({
+        return Object.values(selectedPokemonsRedux).map(item => ({
             ...item,
             possession: 'blue',
         }))

@@ -67,6 +67,7 @@ export const slice = createSlice({
 export const { fetchPokemons, fetchPokemonsResolve, fetchPokemonsReject, handleSelectedPokemons, handleSetPlayer2, cleanPokemons, handleSetWinner } = slice.actions;
 
 export const selectPokemonsData = state => state.pokemons.data;
+export const player2PokemonsData = state => state.pokemons.player2Pokemons;
 export const selectedPokemons = state => state.pokemons.selectedPokemons;
 export const winner = state => state.pokemons.winner;
 

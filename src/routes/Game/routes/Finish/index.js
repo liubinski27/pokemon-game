@@ -1,31 +1,30 @@
 import { useHistory } from "react-router";
 import { useContext, useState } from "react/cjs/react.development";
-import { PokemonContext } from "../../../../context/pokemonContext";
 import PokemonCard from "../../../../components/PokemonCard";
 import classNames from "classnames";
 
 import style from './style.module.css';
 import { FireBaseContext } from "../../../../context/firebaseContext";
 import { useDispatch, useSelector } from "react-redux";
-import { cleanPokemons, winner } from "../../../../store/pokemons";
+import { cleanPokemons, winner, player2PokemonsData, selectedPokemons } from "../../../../store/pokemons";
 
 const FinishPage = (pokemons1, pokemons2) => {
     const dispatch = useDispatch();
     const history = useHistory();
-    const firebaseContext = useContext(FireBaseContext);
-    const pokemonContext = useContext(PokemonContext);
-    const poks1 = pokemonContext.pokemons;
-    const poks2 = Object.entries(pokemonContext.player2Pokemons);
 
-    if (Object.keys(poks1).length === 0 && poks2.length === 0) {
+    const firebaseContext = useContext(FireBaseContext);
+
+    const poks1 = useSelector(selectedPokemons);
+    const poks2 = useSelector(player2PokemonsData);
+
+    if (Object.keys(poks1).length === 0 && Object.keys(poks2).length === 0) {
         history.replace('/game');
     }
 
     const winnerRedux = useSelector(winner);
 
     const [isDisabled, setDisabled] = useState(true);
-    const [player2Pokemons, setPlayer2Cards] = useState(poks2);
-    console.log('AAAAAAAAAAAAAAAAAAAAAAAAAA, ', player2Pokemons);
+    const [player2Pokemons, setPlayer2Cards] = useState(Object.entries(poks2));
     const [chosenPokemon, setChosenPokemon] = useState(null);
 
     if (isDisabled === true && (winnerRedux === 0 || winnerRedux === 2)) {
@@ -39,7 +38,6 @@ const FinishPage = (pokemons1, pokemons2) => {
         }
         if (winnerRedux === 1) {
             if (Object.values(chosenPokemon).length > 0) {
-                console.log('12345 ', Object.values(chosenPokemon));
                 dispatch(cleanPokemons());
                 firebaseContext.addPokemon(chosenPokemon);
                 history.replace('/game');
@@ -50,6 +48,7 @@ const FinishPage = (pokemons1, pokemons2) => {
     const handleChosePokemon = (id) => {
         if (winnerRedux === 1) {
             setPlayer2Cards(prevState => {
+                console.log(prevState);
                 return prevState.map(pokemon => {
                     if (pokemon[1].id === id) {
                         setChosenPokemon({
