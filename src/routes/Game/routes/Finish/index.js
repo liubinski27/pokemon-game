@@ -1,66 +1,85 @@
 import { useHistory } from "react-router";
-import { useContext, useState } from "react/cjs/react.development";
-import { PokemonContext } from "../../../../context/pokemonContext";
+import { useState } from "react/cjs/react.development";
 import PokemonCard from "../../../../components/PokemonCard";
 import classNames from "classnames";
 
 import style from './style.module.css';
-import { FireBaseContext } from "../../../../context/firebaseContext";
+import { useDispatch, useSelector } from "react-redux";
+import { cleanPokemons, winner, player2PokemonsData, selectedPokemons } from "../../../../store/pokemons";
+import FirebaseClass from "../../../../services/firebase";
 
 const FinishPage = (pokemons1, pokemons2) => {
+    const dispatch = useDispatch();
     const history = useHistory();
-    const firebaseContext = useContext(FireBaseContext);
-    const pokemonContext = useContext(PokemonContext);
-    const poks1 = pokemonContext.pokemons;
-    const poks2 = Object.entries(pokemonContext.player2Pokemons);
 
-    if (Object.keys(poks1).length === 0 && poks2.length === 0) {
+    const poks1 = useSelector(selectedPokemons);
+    const poks2 = useSelector(player2PokemonsData);
+
+    if (Object.keys(poks1).length === 0 && Object.keys(poks2).length === 0) {
         history.replace('/game');
     }
 
-    const winner = pokemonContext.winner;
+    const winnerRedux = useSelector(winner);
 
     const [isDisabled, setDisabled] = useState(true);
-    const [player2Pokemons, setPlayer2Cards] = useState(poks2);
-    console.log('AAAAAAAAAAAAAAAAAAAAAAAAAA, ', player2Pokemons);
-    const [chosenPokemon, setChosenPokemon] = useState(null);
+    const [player2Pokemons, setPlayer2Cards] = useState(Object.entries(poks2));
+    const [chosenPokemon, setChosenPokemon] = useState({});
 
-    if (isDisabled === true && (winner === 0 || winner === 2)) {
+    if (isDisabled === true && (winnerRedux === 0 || winnerRedux === 2)) {
         setDisabled(false);
     }
 
     const handleBackToStart = () => {
-        if (winner === 0 || winner === 2) {
-            pokemonContext.cleanContext();
+        if (winnerRedux === 0 || winnerRedux === 2) {
+            dispatch(cleanPokemons());
             history.replace('/game');
         }
-        if (winner === 1) {
-            if (Object.values(chosenPokemon).length > 0) {
-                console.log('12345 ', Object.values(chosenPokemon));
-                pokemonContext.cleanContext();
-                firebaseContext.addPokemon(chosenPokemon);
+        if (winnerRedux === 1) {
+            console.log(chosenPokemon);
+            if (Object.entries(chosenPokemon).length > 0) {
+                dispatch(cleanPokemons());
+                console.log(chosenPokemon);
+                FirebaseClass.addPokemon({...chosenPokemon, selected: false})
                 history.replace('/game');
             }
         }
     }
 
-    const handleChosePokemon = (id) => {
-        if (winner === 1) {
+    // const handleChosePokemon = (id) => {
+    //     if (winnerRedux === 1) {
+    //         setPlayer2Cards(prevState => {
+    //             console.log(prevState);
+    //             return prevState.map(pokemon => {
+    //                 if (pokemon[1].id === id) {
+    //                     setChosenPokemon({
+    //                         ...pokemon[1],
+    //                         selected: false
+    //                     });
+    //                     pokemon[1].selected = true;
+    //                 } else pokemon[1].selected = false;
+    //                 return pokemon;
+    //             })
+    //         })
+    //         setDisabled(false);
+    //     }
+    // }
+
+    const handleChosePokemon = id => {
+        if (winnerRedux === 1) {
             setPlayer2Cards(prevState => {
-                return prevState.map(pokemon => {
-                    if (pokemon[1].id === id) {
-                        setChosenPokemon({
-                            ...pokemon[1],
-                            selected: false
-                        });
-                        pokemon[1].selected = true;
-                    } else pokemon[1].selected = false;
-                    return pokemon;
-                })
-            })
+                return prevState.reduce((acc, item) => {
+                    item[1] = {...item[1], selected: false};
+                    if (item[1].id === id) {
+                        item[1].selected = true;
+                        setChosenPokemon(item[1]);
+                    }
+                    acc.push(item);
+                    return acc;
+                }, []);
+            });
             setDisabled(false);
         }
-    }
+    };
 
     return (
         <div className={style.finish__flex}>
