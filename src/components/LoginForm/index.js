@@ -1,9 +1,14 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Input from "../Input";
 
 import style from './style.module.css';
 
-const LoginForm = ({ onSubmit }) => {
+const LoginForm = ({ onSubmit, isResetField = false }) => {
+
+    useEffect(() => {
+        setEmail('');
+        setPassword('');
+    }, [isResetField])
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -14,7 +19,7 @@ const LoginForm = ({ onSubmit }) => {
         onSubmit && onSubmit({
             email,
             password,
-            isRegistered
+            type: isRegistered ? 'signup' : 'login'
         });
         setEmail('');
         setPassword('');
