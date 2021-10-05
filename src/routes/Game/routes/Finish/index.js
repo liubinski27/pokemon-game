@@ -7,6 +7,7 @@ import style from './style.module.css';
 import { useDispatch, useSelector } from "react-redux";
 import { cleanPokemons, winner, player2PokemonsData, selectedPokemons } from "../../../../store/pokemons";
 import FirebaseClass from "../../../../services/firebase";
+import { selectLocalID } from "../../../../store/user";
 
 const FinishPage = (pokemons1, pokemons2) => {
     const dispatch = useDispatch();
@@ -14,6 +15,7 @@ const FinishPage = (pokemons1, pokemons2) => {
 
     const poks1 = useSelector(selectedPokemons);
     const poks2 = useSelector(player2PokemonsData);
+    const localId = useSelector(selectLocalID);
 
     if (Object.keys(poks1).length === 0 && Object.keys(poks2).length === 0) {
         history.replace('/game');
@@ -35,34 +37,13 @@ const FinishPage = (pokemons1, pokemons2) => {
             history.replace('/game');
         }
         if (winnerRedux === 1) {
-            console.log(chosenPokemon);
             if (Object.entries(chosenPokemon).length > 0) {
                 dispatch(cleanPokemons());
-                console.log(chosenPokemon);
-                FirebaseClass.addPokemon({...chosenPokemon, selected: false})
+                FirebaseClass.addPokemon({...chosenPokemon, selected: false}, localId)
                 history.replace('/game');
             }
         }
     }
-
-    // const handleChosePokemon = (id) => {
-    //     if (winnerRedux === 1) {
-    //         setPlayer2Cards(prevState => {
-    //             console.log(prevState);
-    //             return prevState.map(pokemon => {
-    //                 if (pokemon[1].id === id) {
-    //                     setChosenPokemon({
-    //                         ...pokemon[1],
-    //                         selected: false
-    //                     });
-    //                     pokemon[1].selected = true;
-    //                 } else pokemon[1].selected = false;
-    //                 return pokemon;
-    //             })
-    //         })
-    //         setDisabled(false);
-    //     }
-    // }
 
     const handleChosePokemon = id => {
         if (winnerRedux === 1) {

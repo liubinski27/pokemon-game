@@ -1,10 +1,11 @@
+import React from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { useHistory } from "react-router";
 import { removeUser, selectUser } from "../../store/user"
 
 import style from './style.module.css';
 
-const userPage = () => {
+const UserPage = () => {
     const userData = useSelector(selectUser);
     const dispatch = useDispatch();
     const history = useHistory();
@@ -34,4 +35,4 @@ const userPage = () => {
     );
 };
 
-export default userPage;
+export default UserPage;
