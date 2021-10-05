@@ -1,4 +1,5 @@
 import { useLocation, Route, Switch, Redirect } from "react-router-dom";
+import { NotificationContainer } from 'react-notifications';
 import classNames from "classnames";
 
 import HomePage from "./routes/Home";
@@ -10,39 +11,58 @@ import HeaderMenu from "./components/HeaderMenu";
 import Footer from "./components/Footer";
 
 import style from "./style.module.css";
+import 'react-notifications/lib/notifications.css';
+import PrivateRoute from "./components/PrivateRoute";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { getUserAsync, selectUserLoading } from "./store/user";
+import UserPage from "./routes/UserPage";
 
 const App = () => {
 
+  const isUserLoading = useSelector(selectUserLoading);
   const location = useLocation();
   const isPadding = location.pathname === '/' || location.pathname === '/game/board';
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(getUserAsync());
+  }, []);
+
+  if (isUserLoading) {
+    return 'Loading...';
+  }
   return (
-    <Switch>
+    <>
+      <Switch>
 
-      <Route path="/404" component={NotFoundPage} />
+        <Route path="/404" component={NotFoundPage} />
 
-      <Route>
-        <>
-          <HeaderMenu bgActive={!isPadding} />
-          <div className={classNames(style.wrap, {
-            [style.isHomePage]: isPadding
-          })}>
-            <Switch>
-              <Route path="/" exact component={HomePage} />
-              <Route path="/home" component={HomePage} />
-              <Route path="/game" component={GamePage} />
-              <Route path="/about" component={AboutPage} />
-              <Route path="/contact" component={ContactPage} />
-              <Route render={() => (
-                <Redirect to="/404" />
-              )} />
-            </Switch>
-          </div>
-          <Footer />
-        </>
-      </Route>
+        <Route>
+          <>
+            <HeaderMenu bgActive={!isPadding} />
+            <div className={classNames(style.wrap, {
+              [style.isHomePage]: isPadding
+            })}>
+              <Switch>
+                <Route path="/" exact component={HomePage} />
+                <Route path="/home" component={HomePage} />
+                <PrivateRoute path="/game" component={GamePage} />
+                <PrivateRoute path="/about" component={AboutPage} />
+                <Route path="/contact" component={ContactPage} />
+                <Route path="/login" component={UserPage} />
+                <Route render={() => (
+                  <Redirect to="/404" />
+                )} />
+              </Switch>
+            </div>
+            <Footer />
+          </>
+        </Route>
 
-    </Switch>
+      </Switch>
+      <NotificationContainer />
+    </>
   )
 }
 
